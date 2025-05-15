@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import getIcon from './utils/iconUtils';
+import getIcon from './utils/iconUtils.jsx';
 
 // Pages
 import Home from './pages/Home';
