@@ -184,17 +184,36 @@ function Home() {
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg" style={{ backgroundColor: `${project.color}20` }}>
+                    <div className="p-2 rounded-lg shrink-0" style={{ backgroundColor: `${project.color}20` }}>
                       <FolderIcon className="h-5 w-5" style={{ color: project.color || '#3b82f6' }} />
                     </div>
                     <div>
                       <h3 className="font-semibold">{project.name}</h3>
-                      {project.description && (
-                        <p className="text-sm text-surface-600 dark:text-surface-400 mt-1 line-clamp-2">
-                          {project.description}
+                      {project.client && (
+                        <p className="text-xs text-surface-600 dark:text-surface-400">
+                          Client: {project.client}
                         </p>
                       )}
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {project.status && (
+                          <span className={`px-2 py-0.5 rounded text-xs font-medium 
+                            ${project.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200' : 
+                             project.status === 'in-progress' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200' :
+                             project.status === 'on-hold' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200' :
+                             project.status === 'cancelled' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200' :
+                             'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-200'}`}>
+                            {project.status.charAt(0).toUpperCase() + project.status.slice(1).replace('-', ' ')}
+                          </span>
+                        )}
+                        {project.startDate && project.endDate && (
+                          <span className="px-2 py-0.5 rounded text-xs font-medium bg-surface-100 text-surface-600 dark:bg-surface-700 dark:text-surface-300">
+                            {new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}
+                          </span>
+                        )}
+                      </div>
                     </div>
+                  </div>
+                  <div className="text-right">
                   </div>
                 </div>
               </motion.div>

@@ -10,7 +10,13 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    color: '#3b82f6' // Default to primary color
+    color: '#3b82f6', // Default to primary color
+    client: '',
+    status: 'planning',
+    startDate: '',
+    endDate: '',
+    summary: '',
+    notes: ''
   });
   
   const colorOptions = [
@@ -21,6 +27,14 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
     { value: '#ef4444', label: 'Red' },
     { value: '#6366f1', label: 'Indigo' },
     { value: '#ec4899', label: 'Pink' },
+  ];
+
+  const statusOptions = [
+    { value: 'planning', label: 'Planning' },
+    { value: 'in-progress', label: 'In Progress' },
+    { value: 'on-hold', label: 'On Hold' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'cancelled', label: 'Cancelled' }
   ];
 
   // Close on escape key
@@ -53,7 +67,13 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
     setFormData({
       name: '',
       description: '',
-      color: '#3b82f6'
+      color: '#3b82f6',
+      client: '',
+      status: 'planning',
+      startDate: '',
+      endDate: '',
+      summary: '',
+      notes: ''
     });
     onClose();
   };
@@ -114,6 +134,87 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
                       required
                     />
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="input-group">
+                      <label htmlFor="client" className="input-label">
+                        Client
+                      </label>
+                      <input
+                        type="text"
+                        id="client"
+                        name="client"
+                        value={formData.client}
+                        onChange={handleInputChange}
+                        placeholder="Client name"
+                        className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
+                      />
+                    </div>
+                    
+                    <div className="input-group">
+                      <label htmlFor="status" className="input-label">
+                        Status
+                      </label>
+                      <select
+                        id="status"
+                        name="status"
+                        value={formData.status}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
+                      >
+                        {statusOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="input-group">
+                      <label htmlFor="startDate" className="input-label">
+                        Start Date
+                      </label>
+                      <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                        value={formData.startDate}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
+                      />
+                    </div>
+                    
+                    <div className="input-group">
+                      <label htmlFor="endDate" className="input-label">
+                        End Date
+                      </label>
+                      <input
+                        type="date"
+                        id="endDate"
+                        name="endDate"
+                        value={formData.endDate}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="input-group">
+                    <label htmlFor="summary" className="input-label">Project Summary</label>
+                    <textarea
+                      id="summary"
+                      name="summary"
+                      value={formData.summary}
+                      onChange={handleInputChange}
+                      placeholder="Brief summary of the project"
+                      className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
+                      rows="2"
+                    />
+                  </div>
+
+
                   
                   <div className="input-group">
                     <label htmlFor="description" className="input-label">Description</label>
@@ -124,6 +225,19 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
                       onChange={handleInputChange}
                       placeholder="Enter project description"
                       className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg min-h-[80px]"
+                      rows="3"
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label htmlFor="notes" className="input-label">Notes</label>
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      value={formData.notes}
+                      onChange={handleInputChange}
+                      placeholder="Additional notes or comments"
+                      className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
                       rows="3"
                     />
                   </div>
