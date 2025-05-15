@@ -99,6 +99,24 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.surface.400') theme('colors.surface.200');
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: theme('colors.surface.200');
+    @apply dark:bg-surface-700;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-surface-400 dark:bg-surface-600 rounded-full hover:bg-surface-500 dark:hover:bg-surface-500;
+  }
 
   .animate-in {
     animation: fadeIn 0.3s ease-out;

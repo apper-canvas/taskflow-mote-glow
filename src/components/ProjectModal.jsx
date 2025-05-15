@@ -101,11 +101,11 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
             style={{ pointerEvents: 'none' }}
           >
             <div 
-              className="bg-white dark:bg-surface-800 rounded-xl shadow-xl max-w-lg w-full p-6"
+              className="bg-white dark:bg-surface-800 rounded-xl shadow-xl max-w-lg w-full flex flex-col max-h-[90vh]"
               style={{ pointerEvents: 'auto' }}
               onClick={e => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex justify-between items-center p-6 border-b border-surface-200 dark:border-surface-700">
                 <div className="flex items-center gap-3">
                   <FolderPlusIcon className="h-6 w-6 text-primary dark:text-primary-light" />
                   <h2 className="text-xl font-bold text-surface-900 dark:text-white">Create New Project</h2>
@@ -119,8 +119,8 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
                 </button>
               </div>
               
-              <form onSubmit={handleSubmit}>
-                <div className="space-y-4 mb-6">
+              <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                <div className="space-y-4 p-6 overflow-y-auto custom-scrollbar">
                   <div className="input-group">
                     <label htmlFor="name" className="input-label">
                       Project Name <span className="text-red-500">*</span>
@@ -276,7 +276,7 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
                   </div>
                 </div>
                 
-                <div className="flex justify-end space-x-3">
+                <div className="flex justify-end space-x-3 p-6 border-t border-surface-200 dark:border-surface-700">
                   <button
                     type="button"
                     onClick={onClose}
