@@ -4,11 +4,14 @@ import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
+import ProjectModal from '../components/ProjectModal';
 
 // Import icons
 const ListChecksIcon = getIcon('ListChecks');
 const ClipboardListIcon = getIcon('ClipboardList');
 const BarChart2Icon = getIcon('BarChart2');
+const FolderIcon = getIcon('Folder');
+const PlusIcon = getIcon('Plus');
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,6 +43,23 @@ function Home() {
     pending: 0,
     total: 0
   });
+  
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  
+  const [projects, setProjects] = useState(() => {
+    const savedProjects = localStorage.getItem('taskflow-projects');
+    return savedProjects ? JSON.parse(savedProjects) : [];
+  });
+  
+  useEffect(() => {
+    // Save projects to localStorage
+    localStorage.setItem('taskflow-projects', JSON.stringify(projects));
+  }, [projects]);
+  
+  const addProject = (newProject) => {
+    setProjects([...projects, { ...newProject, id: Date.now().toString(), createdAt: new Date().toISOString() }]);
+    toast.success("Project created successfully!");
+  };
   
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem('taskflow-tasks');
@@ -141,6 +161,64 @@ function Home() {
       </motion.div>
 
       <motion.div variants={itemVariants} className="mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Your Projects</h2>
+          <button
+            onClick={() => setShowProjectModal(true)}
+            className="btn btn-primary flex items-center justify-center gap-2 whitespace-nowrap"
+          >
+            <PlusIcon className="h-4 w-4" />
+            <span>Add Project</span>
+          </button>
+        </div>
+        
+        {projects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {projects.map(project => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="card p-4 border border-surface-200 dark:border-surface-700 hover:shadow-md transition-all duration-200"
+                style={{ borderLeftWidth: '4px', borderLeftColor: project.color || '#3b82f6' }}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg" style={{ backgroundColor: `${project.color}20` }}>
+                      <FolderIcon className="h-5 w-5" style={{ color: project.color || '#3b82f6' }} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{project.name}</h3>
+                      {project.description && (
+                        <p className="text-sm text-surface-600 dark:text-surface-400 mt-1 line-clamp-2">
+                          {project.description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-8 bg-white dark:bg-surface-800 rounded-lg border border-surface-200 dark:border-surface-700 text-center">
+            <FolderIcon className="h-12 w-12 text-surface-400 dark:text-surface-600 mb-3" />
+            <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-1">
+              No projects yet
+            </h3>
+            <p className="text-surface-600 dark:text-surface-400 max-w-md mb-4">
+              Create your first project to organize your tasks better!
+            </p>
+          </div>
+        )}
+        
+        <ProjectModal 
+          isOpen={showProjectModal} 
+          onClose={() => setShowProjectModal(false)} 
+          onAdd={addProject} />
+      </motion.div>
+
+      <motion.div variants={itemVariants} className="mb-8">
         <MainFeature 
           tasks={tasks}
           onAddTask={addTask}
@@ -148,7 +226,7 @@ function Home() {
           onDeleteTask={deleteTask}
         />
       </motion.div>
-      
+
       {tasks.length > 0 && (
         <motion.div variants={itemVariants} className="mb-8">
           <h2 className="text-xl font-bold mb-4">Recent Activity</h2>

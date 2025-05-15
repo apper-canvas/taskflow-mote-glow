@@ -19,6 +19,9 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
+  .modal-backdrop {
+    @apply fixed inset-0 bg-surface-900/50 backdrop-blur-sm z-40;
+  }
     @apply font-heading font-semibold;
   }
 
@@ -37,6 +40,15 @@
   input, textarea, select {
     @apply bg-white dark:bg-surface-800 border-surface-300 dark:border-surface-700;
     @apply rounded-lg text-surface-800 dark:text-surface-200;
+
+/* Project color selection */
+.color-option {
+  @apply w-8 h-8 rounded-full border-2 border-transparent;
+}
+
+.color-option-selected {
+  @apply border-white dark:border-surface-300 ring-2 ring-offset-2 ring-offset-surface-100 dark:ring-offset-surface-800 ring-surface-900 dark:ring-white;
+}
     @apply focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary;
     @apply placeholder:text-surface-400 dark:placeholder:text-surface-500;
     @apply outline-none transition-all duration-200;
