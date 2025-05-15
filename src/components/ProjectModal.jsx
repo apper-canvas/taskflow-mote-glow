@@ -9,6 +9,7 @@ const FolderPlusIcon = getIcon('FolderPlus');
 const ProjectModal = ({ isOpen, onClose, onAdd }) => {
   const [formData, setFormData] = useState({
     name: '',
+    title: '',
     description: '',
     color: '#3b82f6', // Default to primary color
     client: '',
@@ -66,6 +67,7 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
     onAdd(formData);
     setFormData({
       name: '',
+      title: '',
       description: '',
       color: '#3b82f6',
       client: '',
@@ -132,6 +134,21 @@ const ProjectModal = ({ isOpen, onClose, onAdd }) => {
                       placeholder="Enter project name"
                       className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
                       required
+                    />
+                  </div>
+                  
+                  <div className="input-group">
+                    <label htmlFor="title" className="input-label">
+                      Project Title
+                    </label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      placeholder="Enter descriptive project title"
+                      className="w-full p-2 border border-surface-300 dark:border-surface-600 rounded-lg"
                     />
                   </div>
 
